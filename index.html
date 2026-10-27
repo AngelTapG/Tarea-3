@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 3</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+<div class="contenedorprincipal">
+<div class="columnaizquierda">
+    <p class="subtitulo">Contáctanos</p>
+    <h1 class="titulo">¿Necesitas ayuda para hacer crecer tu negocio?</h1>
+    <p class="descripcion">
+            Solicita más información y juntos idearemos la estrategia perfecta para cumplir tus metas.
+    </p>
+</div>
+
+<div class="tarjetaformulario">
+    <form id="formulariocontacto" action="recibir.php" method="POST" autocomplete="off">
+        <div class="filadoble">
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre*">
+            <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos*">
+                </div>
+
+                <div class="filadoble">
+                    <input type="email" id="email" name="email" placeholder="Correo electrónico*">
+                    <input type="tel" id="telefono" name="telefono" placeholder="Número de teléfono móvil*">
+                </div>
+
+                <select id="presupuesto" name="presupuesto">
+                    <option value="" disabled selected hidden>Selecciona tu presupuesto</option>
+                    <option value="18k-25k">De $18,000 - $25,000</option>
+                    <option value="25k-45k">De $25,000 - $45,000</option>
+                    <option value="45k-100k">De $45,000 - $100,000</option>
+                </select>
+
+                <input type="text" id="empresa" name="empresa" placeholder="Nombre de la empresa">
+
+                <select id="industria" name="industria">
+                    <option value="" disabled selected hidden>Selecciona una industria de tu empresa*</option>
+                    <option value="Inmobiliaria">Inmobiliaria</option>
+                    <option value="Educación">Educación</option>
+                    <option value="Turismo">Turismo</option>
+                    <option value="Energías renovables">Energías renovables</option>
+                    <option value="Servicios profesionales">Servicios profesionales</option>
+                    <option value="Startup">Startup</option>
+                    <option value="Ecommerce">Ecommerce</option>
+                    <option value="Financiera">Financiera</option>
+                    <option value="Salud">Salud</option>
+                    <option value="Agencia digital">Agencia digital</option>
+                    <option value="Otro">Otro</option>
+                </select>
+
+                <input type="text" id="sitioweb" name="sitioweb" placeholder="Sitio Web">
+
+                <button type="button" id="btnvalidar" class="botonenviar">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#btnvalidar").click(function () {
+                let regexTexto = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+                let regexCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                let regexTelefono = /^\d{10}$/;
+                let regexUrl = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/.*)?$/i;
+
+                let nombre = $("#nombre").val().trim();
+                if (nombre === '') {
+                    alert("Por favor, ingresa tu nombre.");
+                    $("#nombre").focus();
+                    return false;
+                }
+                if (!regexTexto.test(nombre)) {
+                    alert("El nombre solo debe contener letras.");
+                    $("#nombre").focus();
+                    return false;
+                }
+
+                let apellidos = $("#apellidos").val().trim();
+                if (apellidos === '') {
+                    alert("Por favor, ingresa tus apellidos.");
+                    $("#apellidos").focus();
+                    return false;
+                }
+                if (!regexTexto.test(apellidos)) {
+                    alert("Los apellidos solo deben contener letras.");
+                    $("#apellidos").focus();
+                    return false;
+                }
+
+                let email = $("#email").val().trim();
+                if (email === '') {
+                    alert("Por favor, ingresa tu correo electrónico.");
+                    $("#email").focus();
+                    return false;
+                }
+                if (!regexCorreo.test(email)) {
+                    alert("Por favor, ingresa un correo electrónico válido.");
+                    $("#email").focus();
+                    return false;
+                }
+
+                let telefono = $("#telefono").val().trim();
+                if (telefono === '') {
+                    alert("Por favor, ingresa tu número de teléfono móvil.");
+                    $("#telefono").focus();
+                    return false;
+                }
+                if (!regexTelefono.test(telefono)) {
+                    alert("El número de teléfono debe contener exactamente 10 dígitos numéricos.");
+                    $("#telefono").focus();
+                    return false;
+                }
+
+                if (!$("#industria").val()) {
+                    alert("Por favor, selecciona una industria para tu empresa.");
+                    $("#industria").focus();
+                    return false;
+                }
+
+                let sitioweb = $("#sitioweb").val().trim();
+                if (sitioweb !== '' && !regexUrl.test(sitioweb)) {
+                    alert("Por favor, ingresa una URL de sitio web válida.");
+                    $("#sitioweb").focus();
+                    return false;
+                }
+
+                alert("¡Formulario validado con éxito!");
+                $("#formulariocontacto").submit();
+            });
+        });
+    </script>
+
+</body>
+</html>
